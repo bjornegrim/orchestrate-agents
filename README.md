@@ -13,7 +13,18 @@ Two editions, same rules:
 
 Model names were checked against the Anthropic and OpenAI docs on 2026-11-20. Models change: edit the `model` line in an agent file when a name goes stale.
 
-## Install: Claude Code
+## Install: any agent, with the skills CLI
+
+Works for Claude Code, Codex and others through [vercel-labs/skills](https://github.com/vercel-labs/skills):
+
+```sh
+npx skills add bjornegrim/orchestrate-agents --skill orchestrate
+npx skills find orchestrate
+```
+
+Add `-g` for all projects and `-a claude-code` or `-a codex` to pick one agent. This installs the skill only. The agent files ship inside it, in `agents/claude/` and `agents/codex/`. Copy them once (see the manual steps below) and start a new session. If they are missing, the skill tells you.
+
+## Install: Claude Code plugin
 
 Add the marketplace, then install the plugin:
 

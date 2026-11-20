@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Orchestrator workflow: the main session plans and decides, delegates bounded work to custom subagents on cheaper models (luna_scout, sol_worker) and judgment to astra_reviewer. Use when the user says "spawn subagents", "orchestrate", "delegate this", or asks for a large task with independent parts.
+description: Orchestrator workflow where the main session plans and decides, delegates bounded work to custom subagents on cheaper models (luna_scout, sol_worker) and judgment to astra_reviewer. Use when the user says "spawn subagents", "orchestrate", "delegate this", or asks for a large task with independent parts.
 ---
 
 # Orchestrate

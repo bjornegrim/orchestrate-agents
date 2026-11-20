@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Orchestrator workflow: the main session plans and decides, delegates bounded work to subagents on cheaper models (haiku-scout, sonnet-worker) and judgment to opus-reviewer. Use when the user says "use subagents", "orchestrate", "delegate this", or asks for a large task with independent parts.
+description: Orchestrator workflow where the main session plans and decides, delegates bounded work to subagents on cheaper models (haiku-scout, sonnet-worker) and judgment to opus-reviewer. Use when the user says "use subagents", "orchestrate", "delegate this", or asks for a large task with independent parts.
 ---
 
 # Orchestrate
