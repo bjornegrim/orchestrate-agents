@@ -15,36 +15,36 @@ Model names were checked against the Anthropic and OpenAI docs on 2026-11-20. Mo
 
 ## Install: Claude Code
 
-Copy the agents and the skill into your user folder (all projects) or a project's `.claude/` folder (one project; wins over the user folder).
+Add the marketplace, then install the plugin:
 
-```powershell
-Copy-Item claude-code\agents\*.md  $HOME\.claude\agents\  -Force
-Copy-Item claude-code\skills\orchestrate $HOME\.claude\skills\ -Recurse -Force
+```
+/plugin marketplace add bjornegrim/orchestrate-agents
+/plugin install orchestrate@orchestrate-agents
 ```
 
-```sh
-cp claude-code/agents/*.md ~/.claude/agents/
-cp -r claude-code/skills/orchestrate ~/.claude/skills/
-```
+Run it as `/orchestrate:orchestrate`, or say "orchestrate: ...". The agents come with the plugin. They may be listed as `orchestrate:sonnet-worker`.
 
-A new agent file is not picked up by a running session. Start a new session once. Then say "orchestrate: ..." or run `/orchestrate`.
+Manual alternative: copy `plugins/orchestrate-claude/agents/*.md` to `~/.claude/agents/` and `plugins/orchestrate-claude/skills/orchestrate` to `~/.claude/skills/`, then start a new session (a running session does not see new agent files).
 
 ## Install: Codex
 
-Custom agents are standalone TOML files. Skills live in `.agents/skills`.
+In the Codex app: Plugins, Add plugin marketplace, source `https://github.com/bjornegrim/orchestrate-agents`. Or in a terminal:
+
+```sh
+codex plugin marketplace add bjornegrim/orchestrate-agents
+```
+
+This installs the `orchestrate` skill. A Codex plugin cannot carry custom agents, so copy the three agent files once:
 
 ```powershell
-Copy-Item codex\agents\*.toml $HOME\.codex\agents\ -Force
-Copy-Item codex\skills\orchestrate $HOME\.agents\skills\ -Recurse -Force
+Copy-Item plugins\orchestrate-codex\agents\*.toml $HOME\.codex\agents\ -Force
 ```
 
 ```sh
-mkdir -p ~/.codex/agents ~/.agents/skills
-cp codex/agents/*.toml ~/.codex/agents/
-cp -r codex/skills/orchestrate ~/.agents/skills/
+mkdir -p ~/.codex/agents && cp plugins/orchestrate-codex/agents/*.toml ~/.codex/agents/
 ```
 
-For one project, use `.codex/agents/` and `.agents/skills/` in the repository instead. Restart Codex after copying. Subagents run only when asked, so say "orchestrate: ..." or "spawn `sol_worker` for ...".
+Restart Codex. Subagents run only when asked, so say "orchestrate: ..." or "spawn `sol_worker` for ...". For one project, use `.codex/agents/` in the repository instead.
 
 Codex limits: a custom agent inherits the parent's sandbox, approvals and MCP servers and cannot override them. The reviewer is read-only by instruction, not by a tool lock. Run Codex in a read-only or workspace-write sandbox if you need a hard guarantee.
 

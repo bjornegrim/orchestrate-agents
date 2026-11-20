@@ -1,0 +1,17 @@
+{
+  "name": "orchestrate",
+  "version": "1.0.0",
+  "description": "Orchestrator workflow: a strong main session plans, cheaper subagents do the legwork, a strong reviewer checks risky changes.",
+  "author": { "name": "bjornegrim" },
+  "repository": "https://github.com/bjornegrim/orchestrate-agents",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Orchestrate",
+    "shortDescription": "Plan with one model, delegate legwork to cheaper subagents, review with a strong one.",
+    "developerName": "bjornegrim",
+    "category": "Coding",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": ["Orchestrate this task with subagents"]
+  }
+}

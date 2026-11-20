@@ -1,0 +1,10 @@
+{
+  "name": "orchestrate-agents",
+  "interface": { "displayName": "Orchestrate agents" },
+  "plugins": [
+    {
+      "name": "orchestrate",
+      "source": { "source": "local", "path": "./plugins/orchestrate-codex" }
+    }
+  ]
+}

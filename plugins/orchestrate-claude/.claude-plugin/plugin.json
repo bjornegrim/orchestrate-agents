@@ -1,0 +1,8 @@
+{
+  "name": "orchestrate",
+  "version": "1.0.0",
+  "description": "Orchestrator workflow: a strong main session plans, cheaper subagents do the legwork, a strong reviewer checks risky changes.",
+  "author": { "name": "bjornegrim" },
+  "repository": "https://github.com/bjornegrim/orchestrate-agents",
+  "license": "MIT"
+}
