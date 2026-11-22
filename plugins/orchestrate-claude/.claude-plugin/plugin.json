@@ -1,7 +1,7 @@
 {
   "name": "orchestrate",
-  "version": "1.0.0",
-  "description": "Orchestrator workflow: a strong main session plans, cheaper subagents do the legwork, a strong reviewer checks risky changes.",
+  "version": "2.0.0",
+  "description": "Orchestrator workflow for Claude Max: Opus plans and integrates, seven agents carry sharp briefs, Fable judges at the gates where mistakes are expensive.",
   "author": { "name": "bjornegrim" },
   "repository": "https://github.com/bjornegrim/orchestrate-agents",
   "license": "MIT"

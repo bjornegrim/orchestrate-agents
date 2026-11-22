@@ -1,12 +1,12 @@
 {
   "name": "orchestrate-agents",
-  "description": "Orchestrator workflow with scout, worker and reviewer subagents",
+  "description": "Orchestrator workflow with specialist subagents and oracle gates",
   "owner": { "name": "bjornegrim" },
   "plugins": [
     {
       "name": "orchestrate",
       "source": "./plugins/orchestrate-claude",
-      "description": "Orchestrator skill plus haiku-scout, sonnet-worker and opus-reviewer subagents"
+      "description": "Orchestrator skill plus seven subagents: Fable oracle, Opus specialist and reviewers, Sonnet worker and UI tester, Haiku scout"
     }
   ]
 }
