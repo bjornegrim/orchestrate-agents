@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: "Lean orchestrator workflow for Codex: the main session plans, luna_scout finds, sol_worker builds, astra_reviewer judges until no blocking findings remain. Use when the user says 'orchestrate', 'orkestrera', 'spawn subagents', 'use subagents' or 'delegate this'."
+description: "Use for 'orkestrera', 'orchestrate', 'spawn subagents', 'use subagents', 'delegate this'. Lean orchestrator workflow for Codex: the main session plans, luna_scout finds, sol_worker builds, astra_reviewer judges until no blocking findings remain."
 ---
 
 # Orchestrate

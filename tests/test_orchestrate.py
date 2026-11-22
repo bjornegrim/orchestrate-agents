@@ -298,7 +298,7 @@ class PackageTests(unittest.TestCase):
             return json.loads((ROOT / "plugins" / path).read_text(encoding="utf-8"))["version"]
 
         self.assertEqual(version("orchestrate-claude/.claude-plugin/plugin.json"), "2.0.0")
-        self.assertEqual(version("orchestrate-codex/.codex-plugin/plugin.json"), "1.1.0")
+        self.assertEqual(version("orchestrate-codex/.codex-plugin/plugin.json"), "1.1.1")
 
     def test_codex_profile(self):
         found = {}
@@ -310,6 +310,13 @@ class PackageTests(unittest.TestCase):
             "sol_worker": ("gpt-6.2-sol", "medium"),
             "astra_reviewer": ("gpt-6.2-astra", "high"),
         })
+
+    def test_codex_triggers_survive_truncation(self):
+        # With many skills installed, Codex cuts each description to about 110 characters.
+        path = ROOT / "plugins" / "orchestrate-codex" / "skills" / "orchestrate" / "SKILL.md"
+        shown = yaml.safe_load(frontmatter(path))["description"][:100]
+        for word in ("orkestrera", "orchestrate", "spawn subagents", "use subagents", "delegate this"):
+            self.assertIn(f"'{word}'", shown)
 
     def test_no_root_copy(self):
         self.assertFalse((ROOT / "skills").exists())
