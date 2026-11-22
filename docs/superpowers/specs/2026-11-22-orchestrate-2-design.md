@@ -237,16 +237,18 @@ Exakta formuleringar i prompterna, referensfilernas disposition och testets form
 
 ## 13. Ändrat efter skarpa prov
 
-Avsnittet gäller där det skiljer sig från 3–8. Användaren överlät bedömning, rättning och release.
+Avsnittet gäller där det skiljer sig från 3–10. Användaren överlät bedömning, rättning och release.
 
 | Vad provet visade | Ändring |
 |---|---|
 | Oraklet fick inte läsa en diff utanför repot | Diffen ligger i repot och ignorerar sig själv |
 | En funktion i tre filer byggdes utan worker och granskare | "Liten" är definierad. Beteende i flera filer går till worker |
 | En avgränsad beloppsrättning tog 43 minuter, mot 15 för 1.x | Orkestreraren bygger avgränsad högrisk själv. Djupgranskning och båda grindarna är kvar |
-| Specialist och granskare provade miljontals fall och kantfall utanför kontraktet | Bevis i proportion. A och B kräver ett fel som giltig indata når |
+| Specialist och granskare provade miljontals fall och kantfall utanför kontraktet | Bevis i proportion. A och B kräver ett fel som tillåten indata når. Vid en förtroendegräns räknas allt en utomstående kan skicka |
 | Granskarna anropade advisorn upp till fem gånger | Granskare, orakel och scout avstår. Byggare frågar bara när de kört fast |
 | Små fixar ska gå direkt, och orkestreraren är ingången | Steget Förstå och tre spår: Quick, Standard, High. Spåret väljs per begäran |
+| Slutgranskningen: snabbspåret kunde committa användarens oklara ändringar | Statuskontroll före ändring, fråga före commit |
+| Avrundningsprovet i avsnitt 10 | Byggaren är orkestreraren, inte specialisten |
 | En falsk varning om effort | Värdet som Claude Code fyller i gäller |
 
 ## Källor, lästa 2026-11-22

@@ -428,3 +428,24 @@ class ProcedureTests(TempCase):
         self.write("first")
         approved = self.run_script("snapshot.sh", "first").stdout.strip()
         self.assertEqual(self.commit_reviewed(["first"]), approved)
+
+    def test_quick_lane_sees_the_users_unfinished_edit(self):
+        self.write("page.txt")
+        self.sh("git add page.txt && git commit -qm base")
+        self.write("page.txt", "the user's unfinished edit\n")
+        skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        quick = skill.split("### Quick lane", 1)[1].split("\n## ", 1)[0]
+        check = re.search(r"`(git status [^`]*<paths>)`", quick)
+        self.assertIsNotNone(check, "the quick lane never looks for existing changes")
+        self.assertIn("page.txt", self.sh(check.group(1).replace("<paths>", "page.txt")))
+
+    def test_cleanup_leaves_nothing_visible(self):
+        skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        command = re.search(r"`(rm [^`]*orchestrate-review[^`]*)`", skill).group(1)
+        self.sh(command)  # nothing was frozen: still no error
+        folder = self.tmp / ".orchestrate-review"
+        folder.mkdir()
+        for name in (".gitignore", "review.diff", "packet.md"):
+            (folder / name).write_text("*\n", encoding="utf-8")
+        self.sh(command)
+        self.assertFalse(folder.exists())

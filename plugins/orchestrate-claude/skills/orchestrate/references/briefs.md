@@ -17,7 +17,7 @@ Risk:     low | high
 
 - Keep the field names in English. Write the content in the user's language. The agent reports in that language.
 - A scout needs only Goal, Why, Files and Proof (what counts as a complete answer).
-- A UI tester also needs the address, the persona and data to enter, the widths, and a report file in the scratch directory.
+- A UI tester also needs the address, the persona and data to enter, the widths, and a report file outside the published folders: `.orchestrate-review/` after the frozen-diff step has made it self-ignoring, or otherwise a temporary file.
 - A reviewer gets the user's goal and reason, the path to the frozen diff and the proof command. It does not get your opinion of the change.
 - Specialists get the outcome, the limits and the reasons. Leave the method to them. Workers and scouts get narrower scope and concrete cases.
 - If the project commits or publishes automatically, say in Traps that you do it after review. Agents read those project rules too and would otherwise follow them.

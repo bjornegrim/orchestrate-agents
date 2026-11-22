@@ -32,7 +32,7 @@ Risk can rise during the job and never falls. Grade again on the real diff: work
 
 ### Quick lane
 
-Find the place, change it, run the narrowest check that shows it works, and finish as the project's rules and the user say. When committing, take only your own paths (`git add` new files first): `git commit -m "<message>" --only -- <paths>`. No agents, references, skills, gates, freeze or advisor, and no plan: they would cost more than the change. Report in at most three lines: what changed, how it was checked, anything the user must know.
+Find the place and look before you edit: `git status --short -- <paths>`. If a file already holds changes that are not from this request, make the edit, but tell the user and ask before committing or publishing that file, or it ships their unfinished work. Then change it, run the narrowest check that shows it works, and finish as the project's rules and the user say. When committing, take only your own paths (`git add` new files first): `git commit -m "<message>" --only -- <paths>`. No agents, references, skills, gates, freeze or advisor, and no plan: they would cost more than the change. Report in at most three lines: what changed, how it was checked, anything the user must know.
 
 Done when the change is checked. The steps below do not apply.
 
@@ -77,7 +77,7 @@ Done when every part is in, its diff is read and the full check passes.
 
 - High risk: `orchestrate:opus-reviewer-deep`, whoever built it. Low risk with behaviour changed in several files: `orchestrate:opus-reviewer`. Otherwise your own check is the review.
 - Freeze the diff first, as gates.md says, with `sh "${CLAUDE_SKILL_DIR}/scripts/snapshot.sh" <path>...`, which prints the id.
-- Whoever built it fixes the A and B findings. The same reviewer then checks those findings and the delta. C and D are reported, not looped on. Two failed rounds, or two failed attempts at the same fault, trigger gate 3.
+- Whoever built it fixes the A and B findings, unless the risk rose: then the high-risk rows in step 3 pick the owner. The same reviewer then checks those findings and the delta. C and D are reported, not looped on. Two failed rounds, or two failed attempts at the same fault, trigger gate 3.
 - Gate 2 runs on high risk once the review has zero A and B. After every oracle run, `sh "${CLAUDE_SKILL_DIR}/scripts/served-model.sh" <agent-id>` shows which model answered.
 
 Done when the final diff has zero A and B and, on high risk, the verdict is `Release` or the user has decided. A fix after the last review means not done.
@@ -86,7 +86,7 @@ Done when the final diff has zero A and B and, on high risk, the verdict is `Rel
 
 1. For a frozen diff, take the id again. Another id means the verdict is void: go back to step 6.
 2. The user's instruction in this session wins over the project's rules on committing and publishing. Commit only the job's paths, as gates.md step 6 says, so that the user's staged files stay theirs.
-3. Remove the frozen diff, always before publishing, because a deploy that uploads the folder would carry it: `rm -f .orchestrate-review/review.diff .orchestrate-review/.gitignore && rmdir .orchestrate-review`.
+3. Remove the frozen diff, always before publishing, because a deploy that uploads the folder would carry it: `rm -rf .orchestrate-review`.
 4. Publish as the project's rules and the user say, after the gates, because a gate after publishing protects nothing.
 5. Report briefly in the user's language, result first: what changed, who did what, each gate with verdict and answering model, pre-existing problems the reviewers found, skipped steps, and what is not verified.
 
