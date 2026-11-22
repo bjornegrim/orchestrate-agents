@@ -249,6 +249,7 @@ Avsnittet gäller där det skiljer sig från 3–10. Användaren överlät bedö
 | Små fixar ska gå direkt, och orkestreraren är ingången | Steget Förstå och tre spår: Quick, Standard, High. Spåret väljs per begäran |
 | Slutgranskningen: snabbspåret kunde committa användarens oklara ändringar | Statuskontroll före ändring, fråga före commit |
 | Avrundningsprovet i avsnitt 10 | Byggaren är orkestreraren, inte specialisten |
+| En liten funktion gick till grind 3 för att ett test var svagt | En testlucka är C när koden gör rätt |
 | En falsk varning om effort | Värdet som Claude Code fyller i gäller |
 
 ## Källor, lästa 2026-11-22

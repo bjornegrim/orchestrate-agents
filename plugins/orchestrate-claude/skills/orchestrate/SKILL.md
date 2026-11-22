@@ -77,7 +77,7 @@ Done when every part is in, its diff is read and the full check passes.
 
 - High risk: `orchestrate:opus-reviewer-deep`, whoever built it. Low risk with behaviour changed in several files: `orchestrate:opus-reviewer`. Otherwise your own check is the review.
 - Freeze the diff first, as gates.md says, with `sh "${CLAUDE_SKILL_DIR}/scripts/snapshot.sh" <path>...`, which prints the id.
-- Whoever built it fixes the A and B findings, unless the risk rose: then the high-risk rows in step 3 pick the owner. The same reviewer then checks those findings and the delta. C and D are reported, not looped on. Two failed rounds, or two failed attempts at the same fault, trigger gate 3.
+- Whoever built it fixes the A and B findings, unless the risk rose: then the high-risk rows in step 3 pick the owner. The same reviewer then checks those findings and the delta. C and D are reported, not looped on, and that includes test gaps where the code itself is right: they never cause another round or a gate 3. Two failed rounds, or two failed attempts at the same fault, trigger gate 3.
 - Gate 2 runs on high risk once the review has zero A and B. After every oracle run, `sh "${CLAUDE_SKILL_DIR}/scripts/served-model.sh" <agent-id>` shows which model answered.
 
 Done when the final diff has zero A and B and, on high risk, the verdict is `Release` or the user has decided. A fix after the last review means not done.
