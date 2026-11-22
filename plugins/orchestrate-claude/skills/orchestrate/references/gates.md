@@ -105,14 +105,25 @@ A verdict covers exactly the code that was judged.
 
    Keep this job's paths and drop the user's untouched changes. Name files, not `.`, so unrelated files and secrets stay out. A file that holds secret values is never named. List it as not judged.
 2. Run the snapshot helper from SKILL.md on those paths. The result is the id. If the list is empty because the work is already committed, the id is `git rev-parse 'HEAD^{tree}'`.
-3. Write the diff from the base recorded in step 1 of SKILL.md to a file in the session's scratch directory, or a temporary directory if there is none. From the base it also covers work committed during the job:
+3. Write the diff from the base recorded in step 3 of SKILL.md, inside the repository. Agents read there without a permission question, and a temporary directory would need one. From the base it also covers work committed during the job:
 
    ```sh
-   git diff <base> <id> > "<file>"
+   mkdir -p .orchestrate-review && printf '*\n' > .orchestrate-review/.gitignore
+   git diff <base> <id> > .orchestrate-review/review.diff
    ```
 
+   The directory ignores itself, so it enters neither the list nor the id.
 4. Give reviewer and oracle the file path and the id.
 5. After each review and before commit, make the list again and take the id again, because files appear and disappear with fixes. A different id voids the verdict.
-6. At commit, once the reviewed paths are staged, `git write-tree` equals the id. Any other staged path makes it differ.
+6. Commit only the reviewed paths, right after step 5 gave the approved id. The user's staged files stay staged and out of the commit:
+
+   ```sh
+   set -- <paths>
+   for p; do [ ! -e "$p" ] || git add -- "$p"; done
+   git commit -q -m "<message>" --only -- "$@"
+   git rev-parse 'HEAD^{tree}'
+   ```
+
+   The last line equals the id. If it does not, something such as a commit hook changed the code: do not push, and report it.
 
 Without git, give the files themselves and report `Input: not frozen`.

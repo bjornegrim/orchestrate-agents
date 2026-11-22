@@ -1,6 +1,6 @@
 # Orchestrate 2.0: design
 
-Datum: 2026-11-22. Status: godkänd 2026-11-22.
+Datum: 2026-11-22. Status: godkänd 2026-11-22, ändrad efter skarpa prov samma dag (avsnitt 13).
 
 Märkning: **[Beslutat]** har användaren valt. **[Förslag]** har visats i dialogen utan invändning. **[Nytt]** tillkom när designen skrevs och bör läsas extra noga.
 
@@ -147,8 +147,8 @@ En dom gäller exakt den kod som dömdes. Utan detta kan en sen rättning smita 
 
 - Kräver minst en sökväg, så att orelaterade ospårade filer och hemligheter inte följer med.
 - Klarar nya, borttagna och ospårade filer samt ett repo utan commits.
-- Diffen till granskare och orakel skapas med `git diff HEAD <tree-id>` och sparas i sessionens scratchkatalog, som oraklet kan läsa. Utan commits jämförs mot det tomma trädet.
-- Före commit får inga andra sökvägar än de granskade vara stagade.
+- Diffen till granskare och orakel skapas med `git diff <jobbets bas> <tree-id>` och sparas i `.orchestrate-review/` i repot, som ignorerar sig själv. Utan commits är basen det tomma trädet.
+- Committen tar bara de granskade sökvägarna (`git commit --only`). Dess tree-id ska vara det godkända.
 - Utan git: skicka filerna och rapportera `Underlag: inte fryst`.
 - Id:t tas före granskning, efter granskning och före commit. Avvikelse betyder att domen är ogiltig.
 
@@ -234,6 +234,20 @@ Varje punkt kräver användarens ja.
 ## 12. Lämnat till byggaren
 
 Exakta formuleringar i prompterna, referensfilernas disposition och testets form. Roller, modeller, effort, utlösare och stoppregler ändras inte utan nytt godkännande.
+
+## 13. Ändrat efter skarpa prov
+
+Avsnittet gäller där det skiljer sig från 3–8. Användaren överlät bedömning, rättning och release.
+
+| Vad provet visade | Ändring |
+|---|---|
+| Oraklet fick inte läsa en diff utanför repot | Diffen ligger i repot och ignorerar sig själv |
+| En funktion i tre filer byggdes utan worker och granskare | "Liten" är definierad. Beteende i flera filer går till worker |
+| En avgränsad beloppsrättning tog 43 minuter, mot 15 för 1.x | Orkestreraren bygger avgränsad högrisk själv. Djupgranskning och båda grindarna är kvar |
+| Specialist och granskare provade miljontals fall och kantfall utanför kontraktet | Bevis i proportion. A och B kräver ett fel som giltig indata når |
+| Granskarna anropade advisorn upp till fem gånger | Granskare, orakel och scout avstår. Byggare frågar bara när de kört fast |
+| Små fixar ska gå direkt, och orkestreraren är ingången | Steget Förstå och tre spår: Quick, Standard, High. Spåret väljs per begäran |
+| En falsk varning om effort | Värdet som Claude Code fyller i gäller |
 
 ## Källor, lästa 2026-11-22
 

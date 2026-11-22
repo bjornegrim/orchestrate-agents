@@ -3,6 +3,7 @@
 import json
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import tempfile
@@ -346,7 +347,7 @@ class ProcedureTests(TempCase):
     def procedure(self):
         gates = (SKILL / "references" / "gates.md").read_text(encoding="utf-8")
         blocks = re.findall(r"```sh\n(.*?)```", gates.split("## Frozen diff", 1)[1], re.S)
-        self.assertEqual(len(blocks), 2, "expected one block that lists paths and one that writes the diff")
+        self.assertEqual(len(blocks), 3, "expected blocks that list paths, write the diff and commit")
         return [re.sub(r"(?m)^\s+", "", block) for block in blocks]
 
     def record_base(self):
@@ -356,13 +357,17 @@ class ProcedureTests(TempCase):
         return self.sh(command.group(1))
 
     def freeze(self, base):
-        list_paths, write_diff = self.procedure()
+        list_paths, write_diff, _ = self.procedure()
         paths = sorted(set(self.sh(list_paths).splitlines()))
         snapshot = self.run_script("snapshot.sh", *paths)
         self.assertEqual(snapshot.returncode, 0, snapshot.stderr)
         command = write_diff.replace("<base>", base).replace("<id>", snapshot.stdout.strip())
-        self.sh(command.replace("<file>", ".git/frozen review.diff"))
-        return paths, (self.tmp / ".git" / "frozen review.diff").read_text(encoding="utf-8")
+        self.assertNotIn("<file>", command, "the diff must land inside the repository, where agents can read it")
+        self.sh(command)
+        frozen = self.tmp / ".orchestrate-review" / "review.diff"
+        self.assertTrue(frozen.is_file())
+        self.assertEqual(sorted(set(self.sh(list_paths).splitlines())), paths, "the diff file entered the job")
+        return paths, frozen.read_text(encoding="utf-8")
 
     def test_diff_covers_work_committed_during_the_job(self):
         self.write("old")
@@ -399,3 +404,27 @@ class ProcedureTests(TempCase):
         paths, diff = self.freeze(self.record_base())
         self.assertEqual(paths, ["first"])
         self.assertIn("first", diff)
+
+    def commit_reviewed(self, paths):
+        command = self.procedure()[2].replace("<paths>", " ".join(shlex.quote(p) for p in paths))
+        return self.sh(command.replace("<message>", "reviewed")).splitlines()[-1]
+
+    def test_commit_takes_only_reviewed_paths(self):
+        for name in ("edit", "delete", "rename me"):
+            self.write(name)
+        self.sh("git add -A && git commit -qm base")
+        self.write("edit", "changed\n")
+        (self.tmp / "delete").unlink()
+        self.sh("git mv 'rename me' renamed")
+        self.write("ny fil.txt")
+        self.write("todo.txt")
+        self.sh("git add todo.txt")  # the user's own staged file
+        paths = ["delete", "edit", "ny fil.txt", "rename me", "renamed"]
+        approved = self.run_script("snapshot.sh", *paths).stdout.strip()
+        self.assertEqual(self.commit_reviewed(paths), approved)
+        self.assertEqual(self.sh("git diff --cached --name-only"), "todo.txt")
+
+    def test_commit_without_earlier_commits(self):
+        self.write("first")
+        approved = self.run_script("snapshot.sh", "first").stdout.strip()
+        self.assertEqual(self.commit_reviewed(["first"]), approved)

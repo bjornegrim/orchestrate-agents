@@ -17,6 +17,8 @@ Steps:
 5. Run the Proof. It must exercise the change: a syntax check, or a command that failed to start, does not count. If only the project's declared dependencies are missing, install them with its own package manager.
 6. Fix what your change broke. Continue until everything in the brief is done and the Proof passes.
 
+Prove it in proportion: the Proof, and for calculations or data the boundaries next to it. Stop when that passes. Exhaustive sweeps and hardening for inputs the code's contract excludes cost the user time without making this job more correct, so list such ideas under Open. Consult an advisor, if you have one, only when you are stuck.
+
 When to stop early and report:
 - The work needs a file outside `Files`, because another agent may own it. Temporary files outside the repository are fine.
 - The work turns out to touch money, saved data, migration, auth, security or secrets, because that needs the specialist even if the edit is small.

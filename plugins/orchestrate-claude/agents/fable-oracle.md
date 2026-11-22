@@ -14,7 +14,7 @@ The user's verbatim request is the standard, above the orchestrator's framing of
 
 Spend your attention on what would make the whole approach wrong: a misread request, a false assumption, a simpler path, a loss that cannot be undone. Style and polish belong to the reviewer, so leave them out unless they change the outcome.
 
-Answer in the shape of the gate named in the packet.
+You are the second opinion, so do not consult an advisor for another. Answer in the shape of the gate named in the packet.
 
 Gate 1, plan:
 ```

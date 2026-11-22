@@ -1,6 +1,6 @@
 # Orchestrate: one mind in charge, the right model for each job
 
-A workflow for larger coding tasks. A strong main session plans, writes sharp briefs, integrates and commits. Agents on fitting models do the work. The strongest model judges at the few points where a wrong decision is expensive.
+One entry point for coding work. A strong main session works out what you want, makes small fixes at once, and hands larger work to agents on fitting models with sharp briefs. The strongest model judges at the few points where a wrong decision is expensive.
 
 There are two editions:
 
@@ -25,7 +25,17 @@ claude plugin marketplace add bjornegrim/orchestrate-agents
 claude plugin install orchestrate@orchestrate-agents
 ```
 
-Start a new session. Run `/orchestrate:orchestrate`, or say "orchestrate: ...".
+Start a new session. Run `/orchestrate:orchestrate`, or say "orchestrate: ...". It then stays in charge for the rest of the session: just write your next request, large or small.
+
+### Three lanes
+
+The orchestrator picks a lane for each request, and moves a job up if it grows.
+
+| Lane | For | What happens |
+| --- | --- | --- |
+| Quick | Text, colours, spacing, a button, an obvious one-file fix | It just does it. No agents, no gates |
+| Standard | Features and bugs at low risk | Workers build what spans several files. An Opus reviewer checks it |
+| High | Money, saved data, migration, auth, security | Plan gate, build, deep review, release gate. Slower on purpose |
 
 ### Roles
 
@@ -33,7 +43,7 @@ Start a new session. Run `/orchestrate:orchestrate`, or say "orchestrate: ...".
 | --- | --- | --- | --- | --- |
 | Orchestrator | your main session | Opus or better | high or above | Plan, decisions, briefs, integration, commit |
 | Oracle | `fable-oracle` | Fable | high | Judges at the gates. Cannot edit |
-| Specialist | `opus-specialist` | Opus | high | High risk, hard bugs, unclear design |
+| Specialist | `opus-specialist` | Opus | high | Unknown cause, migrations, large high-risk work |
 | Reviewer | `opus-reviewer` | Opus | high | Tries to disprove a change |
 | Deep reviewer | `opus-reviewer-deep` | Opus | xhigh | Reviews high risk, stands in for the oracle |
 | Worker | `sonnet-worker` | Sonnet | medium | Bounded low-risk building |
@@ -56,6 +66,8 @@ Small and ordinary jobs never reach Fable unless they deadlock or meet a gate 1 
 
 A verdict is tied to a fingerprint of the reviewed files. A later edit voids it. After each gate the orchestrator reads the agent's log to see which model answered, because a safety fallback or a model restriction can change it.
 
+A contained high-risk fix is built by the orchestrator, which already has the context. The deep review and both gates still run.
+
 These rules are instructions to the orchestrator, not hooks. Nothing technically blocks a commit that skips them.
 
 ### The brief
@@ -75,6 +87,7 @@ Risk:     low | high
 
 - **Model or effort:** edit `model` or `effort` in the agent file.
 - **Browser for the UI tester:** its `tools` line names the MCP servers `obscura` and `playwright` (as a plugin). With other browser tools, replace `mcp__obscura__*` and `mcp__plugin_playwright_playwright__*` with `mcp__<your server>__*`.
+- **Speed:** if you have set an advisor, agents can inherit it, and each call re-reads their whole transcript. `/advisor off` makes jobs faster at the cost of those second opinions.
 - **An installed plugin is overwritten on update.** Keep your changes in a fork.
 
 ## Codex
@@ -120,7 +133,14 @@ A custom agent inherits the parent's sandbox, approvals and MCP servers. The rev
   claude plugin update orchestrate@orchestrate-agents
   ```
 
-- If you run on the smallest Claude plan: 2.0 uses more quota than 1.x. Version 1 is at commit `efcdd9e`.
+- If you use Codex: copy the three `.toml` files again after the update, as shown above.
+- If you run on the smallest Claude plan: 2.0 uses more quota than 1.x. To stay on version 1:
+
+  ```sh
+  claude plugin marketplace remove orchestrate-agents
+  claude plugin marketplace add bjornegrim/orchestrate-agents#v1.0.0
+  claude plugin install orchestrate@orchestrate-agents
+  ```
 
 ## Tests
 
