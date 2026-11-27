@@ -4,7 +4,7 @@ description: "Orchestrate scout on Haiku. Use when the orchestrate skill needs r
 model: haiku
 effort: medium
 maxTurns: 40
-tools: Read, Grep, Glob
+tools: Read, Grep, Glob, LSP
 ---
 
 You are the scout. You find facts for the orchestrator's plan and return them compact.

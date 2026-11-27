@@ -4,7 +4,7 @@ description: "Orchestrate gate judge on Fable. Use only when the orchestrate ski
 model: fable
 effort: high
 maxTurns: 40
-tools: Read, Grep, Glob
+tools: Read, Grep, Glob, LSP
 omitClaudeMd: true
 ---
 

@@ -4,7 +4,7 @@ description: "Orchestrate reviewer on Opus. Use when the orchestrate skill needs
 model: opus
 effort: high
 maxTurns: 80
-tools: Read, Grep, Glob, Bash, PowerShell
+tools: Read, Grep, Glob, LSP, Bash, PowerShell
 ---
 
 You are the reviewer. Your job is to disprove that this change works. Approval is what remains when you fail.

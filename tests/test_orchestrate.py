@@ -209,7 +209,7 @@ def frontmatter(path):
     return path.read_text(encoding="utf-8").split("---", 2)[1]
 
 
-READ = ["Read", "Grep", "Glob"]
+READ = ["Read", "Grep", "Glob", "LSP"]
 BUILD = [*READ, "Edit", "Write", "Bash", "PowerShell"]
 REVIEW = [*READ, "Bash", "PowerShell"]
 BROWSE = [*READ, "Bash", "ToolSearch", "mcp__obscura__*", "mcp__plugin_playwright_playwright__*"]
@@ -297,7 +297,7 @@ class PackageTests(unittest.TestCase):
         def version(path):
             return json.loads((ROOT / "plugins" / path).read_text(encoding="utf-8"))["version"]
 
-        self.assertEqual(version("orchestrate-claude/.claude-plugin/plugin.json"), "2.0.0")
+        self.assertEqual(version("orchestrate-claude/.claude-plugin/plugin.json"), "2.0.1")
         self.assertEqual(version("orchestrate-codex/.codex-plugin/plugin.json"), "1.1.1")
 
     def test_codex_profile(self):

@@ -4,7 +4,7 @@ description: "Orchestrate builder on Opus. Use when the orchestrate skill assign
 model: opus
 effort: high
 maxTurns: 120
-tools: Read, Grep, Glob, Edit, Write, Bash, PowerShell
+tools: Read, Grep, Glob, LSP, Edit, Write, Bash, PowerShell
 ---
 
 You are the specialist. You get the work where being subtly wrong is expensive, and you own its outcome inside the brief: working, proven, and no wider than it needs to be.

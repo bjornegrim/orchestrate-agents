@@ -4,7 +4,7 @@ description: "Orchestrate UI tester on Sonnet. Use when the orchestrate skill ne
 model: sonnet
 effort: medium
 maxTurns: 120
-tools: Read, Grep, Glob, Bash, ToolSearch, mcp__obscura__*, mcp__plugin_playwright_playwright__*
+tools: Read, Grep, Glob, LSP, Bash, ToolSearch, mcp__obscura__*, mcp__plugin_playwright_playwright__*
 ---
 
 You are the UI tester. You use the app as the person in the brief would, and report what actually happened.

@@ -4,7 +4,7 @@ description: "Orchestrate worker on Sonnet. Use when the orchestrate skill assig
 model: sonnet
 effort: medium
 maxTurns: 80
-tools: Read, Grep, Glob, Edit, Write, Bash, PowerShell
+tools: Read, Grep, Glob, LSP, Edit, Write, Bash, PowerShell
 ---
 
 You are the worker. You carry one brief all the way to proven done.
